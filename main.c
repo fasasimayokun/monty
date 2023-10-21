@@ -45,8 +45,8 @@ stack_t *create_node(int nm)
  * @ln_num: the line number of the opcode
  * Return: void(nothing)
  */
-void push_to_queue(stack_t **new_node, __attribute__((unused))u
-		nsigned int ln_num)
+void push_to_queue(stack_t **new_node, __attribute__((unused))
+		unsigned int ln_num)
 {
 	stack_t *curr;
 

@@ -17,27 +17,29 @@ void err(int err_code, ...)
 	int ln_num;
 
 	va_start(ags, err_code);
-	if (err_code == 1)
+	switch (err_code)
 	{
-		fprintf(stderr, "USAGE: monty file\n");
+		case 1:
+			fprintf(stderr, "USAGE: monty file\n");
+			break;
+		case 2:
+			fprintf(stderr, "Error: Can't open file %s\n",
+				va_arg(ags, char *));
+			break;
+		case 3:
+			ln_num = va_arg(ags, int);
+			opc = va_arg(ags, char *);
+			fprintf(stderr, "L%d: unknown instruction %s\n", ln_num, opc);
+			break;
+		case 4:
+			fprintf(stderr, "Error: malloc failed\n");
+			break;
+		case 5:
+			fprintf(stderr, "L%d: usage: push integer\n", va_arg(ags, int));
+			break;
+		default:
+			break;
 	}
-	else if (err_code == 2)
-	{
-		fprintf(stderr, "Error: Can't open file %s\n",
-			va_arg(ags, char *));
-	}
-	else if (err_code == 3)
-	{
-		ln_num = va_arg(ags, int);
-		opc = va_arg(ags, char *);
-		fprintf(stderr, "L%d: unknown instruction %s\n", ln_num, opc);
-	}
-	else if (err_code == 4)
-	{
-		fprintf(stderr, "Error: malloc failed\n");
-	}
-	else
-		fprintf(stderr, "L%d: usage: push integer\n", va_arg(ags, int));
 
 }
 
@@ -92,13 +94,16 @@ void str_err(int err_code, ...)
 	va_start(ags, err_code);
 	ln_numb = va_arg(ags, int);
 
-	if (err_code == 10)
+	switch (err_code)
 	{
-		fprintf(stderr, "L%d: can't pchar, value out of range\n", ln_numb);
-	}
-	else if (err_code == 11)
-	{
-		fprintf(stderr, "L%d: can't pchar, stack empty\n", ln_numb);
+		case 10:
+			fprintf(stderr, "L%d: can't pchar, value out of range\n", ln_numb);
+			break;
+		case 11:
+			fprintf(stderr, "L%d: can't pchar, stack empty\n", ln_numb);
+			break;
+		default:
+			break;
 	}
 
 	free_node();
